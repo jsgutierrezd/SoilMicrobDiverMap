@@ -51,7 +51,7 @@ crops <- read_excel("EnvironmentalLayers/Fertilizer/NLESdata/AFGROEDETABEL2021.x
   select(AFGROEDEKODE,ENGELSKNAVN)
 names(crops) <- c("Afgkode","Crop")
 
-years <- 2017:2021
+years <- c(2017,2019,2020,2021)
 for (i in 1:length(years)) {
   fert1721[[i]]<- fert1721[[i]][,selnames]
   fert1721[[i]]$areakm2 <- expanse(fert1721[[i]])/1000000
@@ -66,14 +66,7 @@ for (i in 1:length(years)) {
               overwrite=T)
   }
 
-
-# 5) Save shortened version of NLES_fields gpkg files ---------------------
-
-writeVector(fert1721,filename = paste0(getwd(),
-                                       "/EnvironmentalLayers/Fertilizer/NLESdata_fields_sp/",
-                                       "NLES",2017:2021,"_w_fields_shortened",".gpkg"),
-            overwrite=T)
-
+names(fert1721[[1]])
 
 # END ---------------------------------------------------------------------
 
