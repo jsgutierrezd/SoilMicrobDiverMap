@@ -51,7 +51,8 @@ crops <- read_excel("EnvironmentalLayers/Fertilizer/NLESdata/AFGROEDETABEL2021.x
   select(AFGROEDEKODE,ENGELSKNAVN)
 names(crops) <- c("Afgkode","Crop")
 
-years <- c(2017,2019,2020,2021)
+years <- c(2017:2021)
+# i=1
 for (i in 1:length(years)) {
   fert1721[[i]]<- fert1721[[i]][,selnames]
   fert1721[[i]]$areakm2 <- expanse(fert1721[[i]])/1000000
@@ -66,7 +67,7 @@ for (i in 1:length(years)) {
               overwrite=T)
   }
 
-names(fert1721[[1]])
+# names(fert1721[[1]])
 
 # END ---------------------------------------------------------------------
 

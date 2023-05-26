@@ -52,21 +52,21 @@ st_write(Marker2017_NLES,
 
 # NLES 2018 ---------------------------------------------------------------
 
-# NLES2018 <- read.table("EnvironmentalLayers/Fertilizer/NLESdata/NLES2018.csv", 
-#                        sep=";", 
-#                        header=T)
-# names(NLES2018)[names(NLES2018)=="imk_id"] <- 
-#   toupper(names(NLES2018)
-#           [names(NLES2018)=="imk_id"])
-# 
-# Marker_2018 <- st_read("O:/Tech_Agro-data1/Geodata/Denmark_national/Agriculture/DMKFields/Mark_2018_CVR_slut.shp")
-# Marker2018_NLES <- Marker_2018 %>% 
-#   left_join(NLES2018, 
-#             by=c("IMK_ID"))
-# 
-# st_write(Marker2018_NLES, 
-#          "EnvironmentalLayers/Fertilizer/NLESdata_fields_sp/NLES2018_w_fields.gpkg",
-#          append=FALSE)
+NLES2018 <- read.table("EnvironmentalLayers/Fertilizer/NLESdata/NLES2018.csv",
+                       sep=";",
+                       header=T)
+names(NLES2018)[names(NLES2018)=="imk_id"] <-
+  toupper(names(NLES2018)
+          [names(NLES2018)=="imk_id"])
+
+Marker_2018 <- st_read("O:/Tech_Agro-data1/Geodata/Denmark_national/Agriculture/DMKFields/Marker_2018_imk.shp")
+Marker2018_NLES <- Marker_2018 %>%
+  left_join(NLES2018,
+            by=c("IMK_ID"))
+
+st_write(Marker2018_NLES,
+         "EnvironmentalLayers/Fertilizer/NLESdata_fields_sp/NLES2018_w_fields.gpkg",
+         append=FALSE)
 
 # NLES 2019 ---------------------------------------------------------------
 

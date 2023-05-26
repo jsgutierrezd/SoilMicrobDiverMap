@@ -47,7 +47,8 @@ names(octext) <- c("Clay","Coarse_sand","Fine_sand","Silt","OC")
 # 4) BD and pH 30m --------------------------------------------------------
 bd30 <- rast("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/1_SOCseq/INPUTS/RASTER/GSOCMap/BD/BDKabAdh_wetlands.tif") %>% 
   resample(octext,method="bilinear") %>% round(digits = 2)
-
+names(bd30) <- "bd"
+# writeRaster(bd30,"O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/bd.tif")
 
 files <- list.files("O:/Tech_Agro-data1/Geodata/Denmark_national/Natural_ressources/Soil_geology/Texture3D_2014/Ph/",
                     pattern = "tif$",
@@ -56,4 +57,7 @@ files <- list.files("O:/Tech_Agro-data1/Geodata/Denmark_national/Natural_ressour
 files
 
 pH <- rast(files[c(2,8,5)])
-pH <- 
+pH30 <- (pH[[1]]*(5/30)) + (pH[[2]]*(10/30)) + (pH[[3]]*(15/30))
+pH10 <- resample(pH30,octext,method="bilinear") %>% round(digits = 2)
+names(pH10) <-"pH"
+# writeRaster(pH10,"O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/pH.tif")
