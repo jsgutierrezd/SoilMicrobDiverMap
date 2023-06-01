@@ -5,9 +5,9 @@
 # Description: Read Geopackage files with NLESS and field information from 
 #         2017 to 2021 but with columns of interest such as, N
 #         fertilization, Field ID, Farm ID, Crop name by field
-#         in English and the amount of fertilizer in KgN/km2. Then rasterize
+#         in English and the amount of fertilizer in KgN/ha. Then rasterize
 #         these some attributes into 10  resolution.
-# Output: Raster files with the cedure
+# Output: Raster files with the procedure
 # Produced by Sebastian Gutierrez - Aarhus University
 # May 2023
 #===============================================================================

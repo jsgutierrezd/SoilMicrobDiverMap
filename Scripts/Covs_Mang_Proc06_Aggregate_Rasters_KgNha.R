@@ -31,3 +31,14 @@ usePackage <- function(p) {
   require(p, character.only = TRUE)
 }
 lapply(pckg,usePackage)
+
+# 3) Load Geopackage files ------------------------------------------------
+files <- list.files("EnvironmentalLayers/Fertilizer/NLESdata_fields_sp/",
+                    pattern = "shortened_KgNkm2.gpkg$",
+                    full.names = TRUE
+)
+files
+
+fert1721sp <- lapply(files,function(x){
+  vect(x) 
+})
