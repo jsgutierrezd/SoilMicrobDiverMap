@@ -58,7 +58,8 @@ for (i in 40:50) {
   tmp <- rasterize(fert1721sp[[year]],ref,names(fert1721sp[[year]][,i]))
   Nrast1 <- c(Nrast1,tmp)
 }
-Nrast1
+Nrast1 <- Nrast1/100 %>% round(digits=2)
+Nrast1[Nrast1<0] <- 0
 
 
 year <- 2
@@ -68,7 +69,8 @@ for (i in 40:50) {
   tmp <- rasterize(fert1721sp[[year]],ref,names(fert1721sp[[year]][,i]))
   Nrast2 <- c(Nrast2,tmp)
 }
-Nrast2
+Nrast2 <- Nrast2/100 %>% round(digits=2)
+Nrast2[Nrast2<0] <- 0
 
 
 year <- 3
@@ -78,7 +80,8 @@ for (i in 40:50) {
   tmp <- rasterize(fert1721sp[[year]],ref,names(fert1721sp[[year]][,i]))
   Nrast3 <- c(Nrast3,tmp)
 }
-Nrast3
+Nrast3 <- Nrast3/100 %>% round(digits=2)
+Nrast3[Nrast3<0] <- 0
 
 
 year <- 4
@@ -88,7 +91,8 @@ for (i in 40:50) {
   tmp <- rasterize(fert1721sp[[year]],ref,names(fert1721sp[[year]][,i]))
   Nrast4 <- c(Nrast4,tmp)
 }
-Nrast4
+Nrast4 <- Nrast4/100 %>% round(digits=2)
+Nrast4[Nrast4<0] <- 0
 
 
 year <- 5
@@ -97,26 +101,45 @@ for (i in 40:50) {
   tmp <- rasterize(fert1721sp[[year]],ref,names(fert1721sp[[year]][,i]))
   Nrast5 <- c(Nrast5,tmp)
 }
-Nrast5
+Nrast5 <- Nrast5/100 %>% round(digits=2)
+Nrast5[Nrast5<0] <- 0
 print(Sys.time() - start)
 
 
+
+gc()
 Nrast1 <- round(Nrast1,digits=2)
+names(Nrast1) <- paste0(c("commer_fert","livestock_man","other_org_fert","cattle_slur","pig_slur","mink_slur",
+                        "soild_livest_man","liquid_livest_man","deep_litter","degassed_biom","sewage_sludge"),"_2017")
 writeRaster(Nrast1,filename = paste0("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/",
-                                     names(NrNrast2ast1),"_2017",".tif"))
+                                     names(Nrast1),".tif"),overwrite=T)
 
+
+gc()
 Nrast2 <- round(Nrast2,digits=2)
+names(Nrast2) <- paste0(c("commer_fert","livestock_man","other_org_fert","cattle_slur","pig_slur","mink_slur",
+                          "soild_livest_man","liquid_livest_man","deep_litter","degassed_biom","sewage_sludge"),"_2018")
 writeRaster(Nrast2,filename = paste0("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/",
-                                     names(Nrast2),"_2018",".tif"))
+                                     names(Nrast2),".tif"),overwrite=T)
 
+
+gc()
 Nrast3 <- round(Nrast3,digits=2)
+names(Nrast3) <- paste0(c("commer_fert","livestock_man","other_org_fert","cattle_slur","pig_slur","mink_slur",
+                          "soild_livest_man","liquid_livest_man","deep_litter","degassed_biom","sewage_sludge"),"_2019")
 writeRaster(Nrast3,filename = paste0("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/",
-                                     names(Nrast3),"_2019",".tif"))
+                                     names(Nrast3),".tif"),overwrite=T)
 
+gc()
 Nrast4 <- round(Nrast4,digits=2)
+names(Nrast4) <- paste0(c("commer_fert","livestock_man","other_org_fert","cattle_slur","pig_slur","mink_slur",
+                          "soild_livest_man","liquid_livest_man","deep_litter","degassed_biom","sewage_sludge"),"_2020")
 writeRaster(Nrast4,filename = paste0("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/",
-                                     names(Nrast4),"_2020",".tif"))
+                                     names(Nrast4),".tif"),overwrite=T)
 
+gc()
 Nrast5 <- round(Nrast5,digits=2)
+names(Nrast5) <- paste0(c("commer_fert","livestock_man","other_org_fert","cattle_slur","pig_slur","mink_slur",
+                          "soild_livest_man","liquid_livest_man","deep_litter","degassed_biom","sewage_sludge"),"_2021")
 writeRaster(Nrast5,filename = paste0("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/",
-                                     names(Nrast5),"_2021",".tif"))
+                                     names(Nrast5),".tif"),overwrite=T)
