@@ -8,8 +8,13 @@
 #              microbial diversity mapping process. Then the 
 #              total dataset of covariates is filtered based on
 #              the list.
+#              The environmental layers corresponding to basic 
+#              soil properties are also loaded.
+#              With this initial dataset of environmental layers
+#              we made the multipoint extraction and the result is
+#              the regression matrix.
 # Output: The initial dataset of covariates that we are using to 
-#         map the target variables.
+#         map the target variables and the regression matrix.
 # Modified by Sebastian Gutierrez - Aarhus University
 # June 2023
 #===============================================================
@@ -25,7 +30,10 @@ setwd("~/AARHUS_PhD/DSMactivities/2_Biodiversity/SoilMicrobDiverMap")
 # 2) Load libraries -------------------------------------------------------
 pckg <- c('terra',
           'readr',
-          'tools')
+          'tools',
+          'magrittr',
+          'readxl',
+          'tidyverse')
 
 usePackage <- function(p) {
   if (!is.element(p, installed.packages()[,1]))
@@ -76,9 +84,33 @@ pH <- rast("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/pH.tif"
 
 soil <- c(octext,bd,pH)
 
-layers <- c(layers,soil)
+layers <- c(soil,layers) # 144 raster layers
+
 saveRDS(names(layers),"Study01/Docs/NamesEnvLayers.rds")
 
+# 7) Load the point dataset
+
+data <- read_excel("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/test_mapping_noduplicates_Metadata_LandUse.xlsx") %>% 
+  filter(mfd_areat0==YearWise_LandUse) %>% 
+  filter(mfd_areat0=="Agriculture"|mfd_areat0=="Natural") %>% 
+  select(fieldsampl:longitude)
+
+data_sp <- vect(data,geom=c("longitude", "latitude"), crs="epsg:4326",keepgeom=T) %>% 
+  project("epsg:25832")
+
+
+# 8) Multi-point extraction -----------------------------------------------
+start <- Sys.time()
+data <- cbind(data,terra::extract(layers,data_sp))
+Sys.time()-start
+colSums(is.na(data))
+data$ID <- NULL
+write_csv(data,"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1.csv")
+write_csv(na.omit(data),"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1borrar.csv")
+
 # END ---------------------------------------------------------------------
+
+
+
 
 
