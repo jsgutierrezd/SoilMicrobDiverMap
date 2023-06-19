@@ -61,9 +61,9 @@ y
 
 ga_ctrl <- gafsControl(functions = rfGA,
                        method = "repeatedcv",
-                       repeats = 5)
+                       repeats = 5,allowParallel = T)
 set.seed(10)
 rf_ga <- gafs(x = x, y = y,
-              iters = 200,
+              iters = 20,
               gafsControl = ga_ctrl)
 rf_ga

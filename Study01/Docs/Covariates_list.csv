@@ -1,5 +1,4 @@
 name,category,scorpan,smd_mapping,desc_text,units
-bluespot_10m_mean,basic,R,1,The amount of rain  that can fall on the model before the cell is flooded,m
 chelsa_bio01_1981_2010_10m,basic,C ,1,Annual mean temperature,Degrees Celsius
 chelsa_bio02_1981_2010_10m,basic,C ,1,Annual mean diurnal range,Degrees Celsius
 chelsa_bio03_1981_2010_10m,basic,C ,1,Isothermality,Percent
@@ -21,7 +20,7 @@ chelsa_bio18_1981_2010_10m,basic,C ,1,Precipitation of warmest quarter,mm
 chelsa_bio19_1981_2010_10m,basic,C ,1,Precipitation of coldest quarter,mm
 convergence_index,basic,R,1,,
 cos_aspect_radians,basic,R,1,Cosine of the aspect,
-cost_dist,basic,R,1,Cummulative cost distance to rivers, using slope for cost,
+cost_dist,basic,R,1,Cummulative cost distance to rivers, using slope for cost
 cross_sectional_curvature,basic,R,1,,
 detrended_3_mean,basic,R,1,Detrended elevation model,m
 dhm2015_terraen_10m,basic,R,1,Digital elevation model,m
@@ -50,7 +49,6 @@ imk_drain_maybe,basic,O,1,Years with possibly drainage-dependent crops 2011 - 20
 imk_drain_no,basic,O,1,Years with drainage-independent crops 2011 - 2020,Years
 imk_drain_yes,basic,O,1,Years with drainage-dependent crops 2011 - 2020,Years
 imk_grass,basic,O,1,Years with grass cover 2011 - 2020,Years
-imk_nonna_sum,basic,O,1,Years with field data 2011 - 2020,Years
 landscape_1,basic,RP,1,Dune landscape,NA
 landscape_10,basic,RP,1,Saalian moraine landscape,NA
 landscape_11,basic,RP,1,Marsh landscape,NA
@@ -85,14 +83,6 @@ positive_openness,basic,R,1,,
 profile_curvature,basic,R,1,,
 profile_curvature2,basic,R,1,,
 rvb_bios,basic,R,1,River valley bottoms using BIOS rivers,NA
-s1_2020_1_vh,radar,SO,1,,
-s1_2020_1_vv,radar,SO,1,,
-s1_2020_2_vh,radar,SO,1,,
-s1_2020_2_vv,radar,SO,1,,
-s1_2020_3_vh,radar,SO,1,,
-s1_2020_3_vv,radar,SO,1,,
-s1_2020_4_vh,radar,SO,1,,
-s1_2020_4_vv,radar,SO,1,,
 s2_geomedian_20180408_20180515_b11,sentinel_composite,O,1,,
 s2_geomedian_20180408_20180515_b12,sentinel_composite,O,1,,
 s2_geomedian_20180408_20180515_b2,sentinel_composite,O,1,,
@@ -132,7 +122,7 @@ tangential_curvature,basic,R,1,,
 total_curvature,basic,R,1,,
 valley_depth,basic,R,1,,
 vdtochn,basic,R,1,Vertical distance to channel,m
-vdtochngt0,basic,R,1,Vertical distance to channel, no negative values,m
+vdtochngt0,basic,R,1,Vertical distance to channel, no negative values
 volume_10m_mean,basic,R,1,The volume of the sub-basin delimited by the cell,m^3
 wetlands_10m,basic,R,1,Wetland extent,NA
 wi_values_wetness,basic,R,1,,
