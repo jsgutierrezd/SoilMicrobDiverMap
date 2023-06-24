@@ -24,7 +24,8 @@ setwd("~/AARHUS_PhD/DSMactivities/2_Biodiversity/SoilMicrobDiverMap")
 # 2) Load libraries -------------------------------------------------------
 pckg <- c('magrittr',
           'readr',
-          'caret')
+          'caret',
+          'mlbench')
 
 usePackage <- function(p) {
   if (!is.element(p, installed.packages()[,1]))
@@ -34,26 +35,18 @@ usePackage <- function(p) {
 lapply(pckg,usePackage)
 
 # 3) Load Excel table -----------------------------------------------------
-data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv")
+data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv") %>% 
+  na.omit()
+names(data)
+
+data.num <- readRDS("Study01/Docs/NamesNumEnvLayers.rds")
+x <- data[,data.num] %>% as.data.frame
+y <- data$shannon.di
 
 
-
-
-library(mlbench)
-n <- 100
-p <- 40
-sigma <- 1
-set.seed(1)
-sim <- mlbench.friedman1(n, sd = sigma)
-colnames(sim$x) <- c(paste("real", 1:5, sep = ""),
-                     paste("bogus", 1:5, sep = ""))
-bogus <- matrix(rnorm(n * p), nrow = n)
-colnames(bogus) <- paste("bogus", 5+(1:ncol(bogus)), sep = "")
-x <- cbind(sim$x, bogus)
-y <- sim$y
 normalization <- preProcess(x)
 x <- predict(normalization, x)
-x <- as.data.frame(x)
+x <- as.data.frame(x) %>% na.omit
 
 x
 y
@@ -62,8 +55,10 @@ y
 ga_ctrl <- gafsControl(functions = rfGA,
                        method = "repeatedcv",
                        repeats = 5,allowParallel = T)
+start <- Sys.time()
 set.seed(10)
 rf_ga <- gafs(x = x, y = y,
-              iters = 20,
+              iters = 5,
               gafsControl = ga_ctrl)
 rf_ga
+Sys.time()-start

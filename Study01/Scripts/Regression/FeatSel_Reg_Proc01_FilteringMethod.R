@@ -1,6 +1,6 @@
 #===============================================================
 # Section: Point dataset of soil microbial diversity
-# Group: Covariates selection
+# Group: Feature selection
 # Procedure: 01
 # Description: Read the dataset of soil microbial diversity with
 #              the coordinates and the target variables and make the extraction.
@@ -41,7 +41,7 @@ targets <- data %>% dplyr::select(fieldsampl:longitude)
 
 data.num <- data %>% 
   dplyr::select(Clay:flow_accumulation,
-                hillyness:imk_nonna_sum,
+                hillyness:imk_grass,
                 longitudinal_curvature,
                 maximal_curvature:volume_10m_mean,
                 wi_values_wetness)
@@ -57,7 +57,7 @@ nzv <- nearZeroVar(as.data.frame(data.num),
                    foreach = T,
                    allowParallel = T,
                    names=T)
-data.num <- data.num[,-nzv$nzv]
+# data.num <- data.num[,-nzv$nzv]
 
 
 # 6) Detect highly-correlated variables -----------------------------------
@@ -67,21 +67,25 @@ corMat <- as.matrix(data.num) %>%
       use = "complete.obs")
 
 highlyCor <- findCorrelation(corMat, 
-                                  cutoff = .70,
+                                  cutoff = .80,
                                   exact=T,
                                   names=T)
 data.num <- data.num %>% 
-  dplyr::select(-all_of(highlyCorDescr))
+  dplyr::select(-all_of(highlyCor))
 
 corMat <- as.matrix(data.num) %>% 
   cor(method = "spearman",
       use = "complete.obs")
 highlyCor <- findCorrelation(corMat,
-                             cutoff = .70,
+                             cutoff = .80,
                              exact=T,
                              names=T)
 data.num <- data.num %>% 
   dplyr::select(-all_of(highlyCor))
+saveRDS(names(data.num),"Study01/Docs/NamesNumEnvLayers.rds")
+saveRDS(names(data.cat),"Study01/Docs/NamesCatEnvLayers.rds")
+saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
+
 
 # 7) Detect linear combos of variables ------------------------------------
 

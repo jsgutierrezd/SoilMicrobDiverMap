@@ -18,7 +18,7 @@
 # Modified by Sebastian Gutierrez - Aarhus University
 # June 2023
 #===============================================================
-
+gc()
 rm(list = ls())
 Sys.setenv(language="EN")
 
@@ -62,7 +62,7 @@ names.total
 # 5) Load only the covariates described in the Excel file -----------------
 
 layers <- rast(files[names.total%in%envlyr$name])
-names(layers) # 127 raster layers
+names(layers) # 103 raster layers
 
 
 # 6) Load additional covariates 10 m--resolution --------------------------
@@ -84,7 +84,7 @@ pH <- rast("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/pH.tif"
 
 soil <- c(octext,bd,pH)
 
-layers <- c(soil,layers) # 131 raster layers
+layers <- c(soil,layers) # 107 raster layers
 
 saveRDS(names(layers),"Study01/Docs/NamesEnvLayers.rds")
 
@@ -101,11 +101,12 @@ data_sp <- vect(data,geom=c("longitude", "latitude"), crs="epsg:4326",keepgeom=T
 
 # 8) Multi-point extraction -----------------------------------------------
 start <- Sys.time()
-data <- cbind(data,terra::extract(layers,data_sp))
+data <- cbind(data,terra::extract(layers,data_sp)) %>% na.omit
 Sys.time()-start
 # colSums(is.na(data))
 data$ID <- NULL
 write_csv(data,"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1.csv")
+
 # write_csv(na.omit(data),"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1borrar.csv")
 
 # END ---------------------------------------------------------------------

@@ -26,17 +26,6 @@ detrended_3_mean,basic,R,1,Detrended elevation model,m
 dhm2015_terraen_10m,basic,R,1,Digital elevation model,m
 flooded_depth_10m_mean,basic,R,1,Elevation difference between input model and in the flooded model,m
 flow_accumulation,basic,R,1,,NA
-geology_1,basic,P,1,Aeolian sand,NA
-geology_10,basic,P,1,Glaciofluvial sand,NA
-geology_11,basic,P,1,Other/unknown,NA
-geology_2,basic,P,1,Freshwater clay,NA
-geology_3,basic,P,1,Freshwater sand,NA
-geology_4,basic,P,1,Freshwater peat,NA
-geology_5,basic,P,1,Marine clay,NA
-geology_6,basic,P,1,Marine sand,NA
-geology_7,basic,P,1,Clay till,NA
-geology_8,basic,P,1,Sand till,NA
-geology_9,basic,P,1,Glaciofluvial clay,NA
 georeg_1,basic,P,1,Northwestern Jutland georegion,NA
 georeg_10,basic,P,1,Southern Denmark georegion,NA
 georeg_2,basic,P,1,Northern Jutland georegion,NA
@@ -49,18 +38,6 @@ imk_drain_maybe,basic,O,1,Years with possibly drainage-dependent crops 2011 - 20
 imk_drain_no,basic,O,1,Years with drainage-independent crops 2011 - 2020,Years
 imk_drain_yes,basic,O,1,Years with drainage-dependent crops 2011 - 2020,Years
 imk_grass,basic,O,1,Years with grass cover 2011 - 2020,Years
-landscape_1,basic,RP,1,Dune landscape,NA
-landscape_10,basic,RP,1,Saalian moraine landscape,NA
-landscape_11,basic,RP,1,Marsh landscape,NA
-landscape_12,basic,RP,1,Bedrock landscape,NA
-landscape_2,basic,RP,1,Post-glacial marine landscape,NA
-landscape_3,basic,RP,1,Reclaimed areas,NA
-landscape_4,basic,RP,1,Late-glacial marine landscape,NA
-landscape_5,basic,RP,1,Weichselian terminal moraine,NA
-landscape_6,basic,RP,1,Weichselian moraine landscape,NA
-landscape_7,basic,RP,1,Weichselian kettled moraine landscape,NA
-landscape_8,basic,RP,1,Weichselian subglacial tunnel valley,NA
-landscape_9,basic,RP,1,Weichselian glacial flood plain,NA
 longitudinal_curvature,basic,R,1,,
 lu_1,basic,O,1,Urban areas,
 lu_2,basic,O,1,Agricultural areas,
@@ -124,5 +101,4 @@ valley_depth,basic,R,1,,
 vdtochn,basic,R,1,Vertical distance to channel,m
 vdtochngt0,basic,R,1,Vertical distance to channel, no negative values
 volume_10m_mean,basic,R,1,The volume of the sub-basin delimited by the cell,m^3
-wetlands_10m,basic,R,1,Wetland extent,NA
 wi_values_wetness,basic,R,1,,
