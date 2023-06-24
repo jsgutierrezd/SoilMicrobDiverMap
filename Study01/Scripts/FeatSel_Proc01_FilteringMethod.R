@@ -1,7 +1,7 @@
 #===============================================================
-# Section: Point dataset of soil microbial diversity
-# Group: Feature selection
-# Procedure: 01
+# Step: 02-Feature selection
+# Problem: Regression
+# Procedure: 01-Filter method 
 # Description: Read the dataset of soil microbial diversity with
 #              the coordinates and the target variables and make the extraction.
 # Output: The initial dataset of covariates that we are using to 
@@ -43,8 +43,8 @@ data.num <- data %>%
   dplyr::select(Clay:flow_accumulation,
                 hillyness:imk_grass,
                 longitudinal_curvature,
-                maximal_curvature:volume_10m_mean,
-                wi_values_wetness)
+                maximal_curvature:wi_values_wetness
+                )
 
 data.cat <- data %>% 
   dplyr::select(-c(names(targets),
@@ -57,6 +57,7 @@ nzv <- nearZeroVar(as.data.frame(data.num),
                    foreach = T,
                    allowParallel = T,
                    names=T)
+nzv
 # data.num <- data.num[,-nzv$nzv]
 
 
@@ -82,25 +83,16 @@ highlyCor <- findCorrelation(corMat,
                              names=T)
 data.num <- data.num %>% 
   dplyr::select(-all_of(highlyCor))
-saveRDS(names(data.num),"Study01/Docs/NamesNumEnvLayers.rds")
-saveRDS(names(data.cat),"Study01/Docs/NamesCatEnvLayers.rds")
+saveRDS(names(data.num),"Study01/Docs/Reg_NamesNumEnvLayers.rds")
+saveRDS(names(data.cat),"Study01/Docs/Reg_NamesCatEnvLayers.rds")
 saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
-
-
-# 7) Detect linear combos of variables ------------------------------------
-
-linearcom <- data.num %>% 
-  na.omit %>% 
-  as.matrix %>% 
-  findLinearCombos
-linearcom
 
 
 # 8) Dataset with the remaining variables ---------------------------------
 
 data.total <- data.frame(targets,data.num,data.cat)
 write_csv(data.total,
-          "C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv")
+          "C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/Reg_RegMatStudy1Filtered.csv")
 
 # END ---------------------------------------------------------------------
 

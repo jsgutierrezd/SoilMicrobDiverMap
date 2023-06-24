@@ -1,7 +1,6 @@
 #===============================================================
-# Section: Covariates
-# Group: NA-Not applicable
-# Procedure: 01
+# Step: 01-Data preparation
+# Procedure: 01-Environmental layers and regression matrix
 # Description: Read the Excel file named "Covariates_list.xlsx",
 #              which contains the names and description of the 
 #              covariates that are available for the soil

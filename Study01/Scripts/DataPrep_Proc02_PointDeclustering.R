@@ -1,7 +1,6 @@
 #===============================================================
-# Section: Point dataset of soil microbial diversity
-# Group: Data set preparation - declustering
-# Procedure: 01
+# Step: 01-Data preparation
+# Procedure: 02-Point data declustering 
 # Description: Read the dataset previously filtered using 
 #              univariate and multivariate methods and
 #              decluster the points.

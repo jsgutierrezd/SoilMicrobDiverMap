@@ -1,7 +1,7 @@
 #===============================================================
-# Section: Point dataset of soil microbial diversity
-# Group: Covariates selection
-# Procedure: 02
+# Step: 02-Feature selection
+# Problem: Regression
+# Procedure: 02-Wrapper method 
 # Description: Read the dataset previously filtered using 
 #              univariate methods and use wrapper (multivariate)
 #              methods to find the optimal combination of 
