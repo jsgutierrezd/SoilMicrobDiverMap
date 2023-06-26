@@ -25,7 +25,9 @@ setwd("~/AARHUS_PhD/DSMactivities/2_Biodiversity/SoilMicrobDiverMap")
 pckg <- c('magrittr',
           'readr',
           'caret',
-          'mlbench')
+          'parallel',
+          'doParallel',
+          'Boruta')
 
 usePackage <- function(p) {
   if (!is.element(p, installed.packages()[,1]))
@@ -34,31 +36,62 @@ usePackage <- function(p) {
 }
 lapply(pckg,usePackage)
 
+ws <- readRDS("Study01/Docs/weightsdeculster.rds")
+source("Study01/Scripts/Functions/weightedvalidation.R")
+
 # 3) Load Excel table -----------------------------------------------------
 data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv") %>% 
-  na.omit()
+  na.omit() %>% as.data.frame
 names(data)
 
-data.num <- readRDS("Study01/Docs/NamesNumEnvLayers.rds")
-x <- data[,data.num] %>% as.data.frame
-y <- data$shannon.di
 
+# 4) Recursive feature elimination ----------------------------------------
 
-normalization <- preProcess(x)
-x <- predict(normalization, x)
-x <- as.data.frame(x) %>% na.omit
+cl <- makeCluster(detectCores()-2, type='PSOCK')
+registerDoParallel(cl)
 
-x
-y
-
-
-ga_ctrl <- gafsControl(functions = rfGA,
-                       method = "repeatedcv",
-                       repeats = 5,allowParallel = T)
+control <- rfeControl(functions=caretFuncs, 
+                      method="repeatedcv", 
+                      number=5,
+                      repeats=5,
+                      allowParallel = T
+                      # saveDetails = T
+                      )
 start <- Sys.time()
-set.seed(10)
-rf_ga <- gafs(x = x, y = y,
-              iters = 5,
-              gafsControl = ga_ctrl)
-rf_ga
-Sys.time()-start
+rfe <- rfe(x=data[,8:68],
+               y=data[,5], 
+               method = "rf",
+               sizes=c(1:30),
+               case.weights=ws$w,
+               rfeControl=control)
+print(Sys.time() - start)
+plot(rfe, type=c("g", "o"))
+predictors(rfe)
+stopCluster(cl=cl)
+namesRFE <- predictors(rfe)
+saveRDS(namesRFE,"Study01/Docs/NamesPredsRegressionRFE.rds")
+
+
+# 5) Boruta ---------------------------------------------------------------
+
+boruta <- Boruta(x = data[,8:68],
+               y = data[,5],
+               doTrace = 0,
+               ntree = 500,
+               maxRuns=500,
+              getImp=getImpXgboost,
+              weight=ws$w)
+boruta <- TentativeRoughFix(boruta)
+boruta
+namesbor <- names(boruta$finalDecision[boruta$finalDecision %in% c("Confirmed")])
+saveRDS(namesbor,"Study01/Docs/NamesPredsRegressionBoruta.rds")
+
+
+# END ---------------------------------------------------------------------
+
+
+
+
+
+
+

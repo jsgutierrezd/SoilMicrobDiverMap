@@ -52,12 +52,12 @@ data.cat <- data %>%
 
 # 5) Detect variables with near-zero variance -----------------------------
 
-nzv <- nearZeroVar(as.data.frame(data.num),
-                   saveMetrics= T,
-                   foreach = T,
-                   allowParallel = T,
-                   names=T)
-nzv
+# nzv <- nearZeroVar(as.data.frame(data.num),
+#                    saveMetrics= T,
+#                    foreach = T,
+#                    allowParallel = T,
+#                    names=T)
+# nzv
 # data.num <- data.num[,-nzv$nzv]
 
 
@@ -83,8 +83,8 @@ highlyCor <- findCorrelation(corMat,
                              names=T)
 data.num <- data.num %>% 
   dplyr::select(-all_of(highlyCor))
-saveRDS(names(data.num),"Study01/Docs/Reg_NamesNumEnvLayers.rds")
-saveRDS(names(data.cat),"Study01/Docs/Reg_NamesCatEnvLayers.rds")
+saveRDS(names(data.num),"Study01/Docs/NamesNumEnvLayers.rds")
+saveRDS(names(data.cat),"Study01/Docs/NamesCatEnvLayers.rds")
 saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
 
 
@@ -92,7 +92,7 @@ saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
 
 data.total <- data.frame(targets,data.num,data.cat)
 write_csv(data.total,
-          "C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/Reg_RegMatStudy1Filtered.csv")
+          "C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv")
 
 # END ---------------------------------------------------------------------
 

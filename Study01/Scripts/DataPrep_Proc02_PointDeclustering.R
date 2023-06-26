@@ -35,8 +35,8 @@ source("Study01/Scripts/Functions/decluster.R")
 
 
 # 3) Dataset --------------------------------------------------------------
-data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv") %>% 
-  data.frame()
+data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1.csv") %>% 
+  data.frame() %>% na.omit()
 coordinates(data) <- ~longitude+latitude
 proj4string(data) <- CRS('+init=epsg:4326')
 data <- spTransform(data,CRS("+init=epsg:25832"))  
@@ -46,7 +46,7 @@ names(data)
 # 4) Declustering ---------------------------------------------------------
 start <- Sys.time()
 ws <- decluster(pts = data, gridspace = c(6000,6000), nshifts = 3, cores = 18, savegrids = TRUE)
-ws
+length(ws$w)
 saveRDS(ws,"Study01/Docs/weightsdeculster.rds")
 print(Sys.time() - start)
 
