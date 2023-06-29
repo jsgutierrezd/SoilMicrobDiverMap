@@ -41,6 +41,7 @@ coordinates(data) <- ~longitude+latitude
 proj4string(data) <- CRS('+init=epsg:4326')
 data <- spTransform(data,CRS("+init=epsg:25832"))  
 summary(data)
+
 names(data)
 
 # 4) Declustering ---------------------------------------------------------
