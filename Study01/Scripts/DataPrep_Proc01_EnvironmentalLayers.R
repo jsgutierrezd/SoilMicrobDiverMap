@@ -85,6 +85,23 @@ soil <- c(octext,bd,pH)
 
 layers <- c(soil,layers) # 107 raster layers
 
+#N fertilization and sewage sludge layers (commercial, manure,sewage sludge)
+
+files <- list.files("O:/Tech_AGRO/Jord/Sebastian/SoilMicrobialDiversity/Layers10m/Nfert/AggregatedLayers/",
+                    pattern = "tif$",
+                    full.names = TRUE
+)
+files
+nfert <- rast(files[c(3,4,11,12,19,20)])
+
+#to fill NA values with zero
+ref <- soil$Clay/soil$Clay 
+nfert[is.na(nfert)] <- 0
+
+nfert <- nfert*ref
+
+layers <- c(soil,layers,nfert) 
+names(layers)
 saveRDS(names(layers),"Study01/Docs/NamesEnvLayers.rds")
 
 # 7) Load the point dataset
@@ -97,13 +114,14 @@ data <- read_excel("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AA
 data_sp <- vect(data,geom=c("longitude", "latitude"), crs="epsg:4326",keepgeom=T) %>% 
   project("epsg:25832")
 
-
+writeVector(data_sp,"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/test_mapping_noduplicates_Metadata_LandUse.shp")
 # 8) Multi-point extraction -----------------------------------------------
 start <- Sys.time()
 data <- cbind(data,terra::extract(layers,data_sp)) %>% na.omit
 Sys.time()-start
-# colSums(is.na(data))
+colSums(is.na(data))
 data$ID <- NULL
+saveRDS(names(data)[8:120],"Study01/Docs/NamesPredsTotal.rds")
 write_csv(data,"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1.csv")
 
 # write_csv(na.omit(data),"C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1borrar.csv")

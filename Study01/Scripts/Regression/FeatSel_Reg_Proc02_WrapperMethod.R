@@ -45,46 +45,22 @@ data <- read_csv("C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARH
 names(data)
 
 
-# 4) Recursive feature elimination ----------------------------------------
-
-cl <- makeCluster(detectCores()-2, type='PSOCK')
-registerDoParallel(cl)
-
-control <- rfeControl(functions=caretFuncs, 
-                      method="repeatedcv", 
-                      number=5,
-                      repeats=5,
-                      allowParallel = T
-                      # saveDetails = T
-                      )
-start <- Sys.time()
-rfe <- rfe(x=data[,8:68],
-               y=data[,5], 
-               method = "rf",
-               sizes=c(1:30),
-               case.weights=ws$w,
-               rfeControl=control)
-print(Sys.time() - start)
-plot(rfe, type=c("g", "o"))
-predictors(rfe)
-stopCluster(cl=cl)
-namesRFE <- predictors(rfe)
-saveRDS(namesRFE,"Study01/Docs/NamesPredsRegressionRFE.rds")
-
-
-# 5) Boruta ---------------------------------------------------------------
-
-boruta <- Boruta(x = data[,8:68],
+# 4) Boruta ---------------------------------------------------------------
+# data$Nitrospira <- ifelse(data$Nitrospira==0,0,1) %>% as.factor()
+# table(data$Nitrospira)
+names(data) # Removing IMK and OGC
+boruta <- Boruta(x = data[,c(8:27,32:35,39:75)],
                y = data[,5],
                doTrace = 0,
-               ntree = 500,
+               # ntree = 500,
                maxRuns=500,
-              getImp=getImpXgboost,
-              weight=ws$w)
+               # weight=ws$w,
+              getImp=getImpXgboost
+              )
 boruta <- TentativeRoughFix(boruta)
 boruta
-namesbor <- names(boruta$finalDecision[boruta$finalDecision %in% c("Confirmed")])
-saveRDS(namesbor,"Study01/Docs/NamesPredsRegressionBoruta.rds")
+(namesbor <- names(boruta$finalDecision[boruta$finalDecision %in% c("Confirmed")]))
+saveRDS(namesbor,"Study01/Docs/NamesPredsRegressionBorutaNoWeights.rds")
 
 
 # END ---------------------------------------------------------------------

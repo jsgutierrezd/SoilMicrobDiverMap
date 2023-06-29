@@ -41,9 +41,8 @@ targets <- data %>% dplyr::select(fieldsampl:longitude)
 
 data.num <- data %>% 
   dplyr::select(Clay:flow_accumulation,
-                hillyness:imk_grass,
-                longitudinal_curvature,
-                maximal_curvature:wi_values_wetness
+                hillyness:longitudinal_curvature,
+                maximal_curvature:sewage_sludge_sd
                 )
 
 data.cat <- data %>% 
@@ -74,15 +73,15 @@ highlyCor <- findCorrelation(corMat,
 data.num <- data.num %>% 
   dplyr::select(-all_of(highlyCor))
 
-corMat <- as.matrix(data.num) %>% 
-  cor(method = "spearman",
-      use = "complete.obs")
-highlyCor <- findCorrelation(corMat,
-                             cutoff = .80,
-                             exact=T,
-                             names=T)
-data.num <- data.num %>% 
-  dplyr::select(-all_of(highlyCor))
+# corMat <- as.matrix(data.num) %>% 
+#   cor(method = "spearman",
+#       use = "complete.obs")
+# highlyCor <- findCorrelation(corMat,
+#                              cutoff = .80,
+#                              exact=T,
+#                              names=T)
+# data.num <- data.num %>% 
+#   dplyr::select(-all_of(highlyCor))
 saveRDS(names(data.num),"Study01/Docs/NamesNumEnvLayers.rds")
 saveRDS(names(data.cat),"Study01/Docs/NamesCatEnvLayers.rds")
 saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
@@ -91,6 +90,7 @@ saveRDS(names(targets),"Study01/Docs/NamesTargetsEnvLayers.rds")
 # 8) Dataset with the remaining variables ---------------------------------
 
 data.total <- data.frame(targets,data.num,data.cat)
+names(data.total)
 write_csv(data.total,
           "C:/Users/au704633/OneDrive - Aarhus Universitet/Documents/AARHUS_PhD/DSMactivities/2_Biodiversity/Metadata/RegMatStudy1Filtered.csv")
 
